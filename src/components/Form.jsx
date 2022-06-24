@@ -52,7 +52,7 @@ class Form extends React.Component {
         <Input
           type="checkbox"
           data-testid="trunfo-input"
-          label="Dexterity:"
+          label="SuperTrunfo?"
           name="isSuperTrunfo"
         />
         <button data-testid="save-button" type="button">Salvar</button>
