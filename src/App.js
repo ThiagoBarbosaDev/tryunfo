@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from './components/Form';
-// import Card from './components/Card';
+import Card from './components/Card';
 import './App.css';
 
 class App extends React.Component {
@@ -28,12 +28,32 @@ class App extends React.Component {
   }
 
   render() {
+    const { cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo } = this.state;
+
+    const cardProps = { cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo };
+
     return (
-      <div>
-        <h1>Tryunfo</h1>
+      <main>
         <Form onInputChange={ this.handleChange } { ...this.state } />
-        {/* <Card onInputChange={ this.handleChange } /> */}
-      </div>
+        <section className="card-preview-section">
+          <h2 className="preview-title">PREVIEW</h2>
+          <Card onInputChange={ this.handleChange } { ...cardProps } />
+        </section>
+      </main>
     );
   }
 }

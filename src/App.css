@@ -81,6 +81,11 @@ body {
   line-height: 1.75;
 }
 
+main {
+  display: flex;
+  flex-direction: row;
+}
+
 p {
   margin-bottom: 1rem;
 }
@@ -102,6 +107,7 @@ h1 {
 
 h2 {
   font-size: 2.441rem;
+  text-align: center;
 }
 
 h3 {
@@ -162,7 +168,8 @@ form {
   background: var(--white);
   border-radius: var(--borderRadius);
   box-shadow: var(--shadow-2);
-  padding: 2rem 2.5rem;
+  padding: 2rem 12.5rem;
+  width: 50%;
 }
 
 input, textarea, select {
@@ -195,4 +202,30 @@ input, textarea, select {
 .success {
   background: var(--green-light);
   color: var(--green-dark);
+}
+
+
+.card-preview-section {
+  background-color: var(--green-dark);
+  box-shadow: var(--shadow-2);
+  padding: 2rem 12.5rem;
+  width: 50vw;
+}
+
+/* preview card */
+.preview-title {
+  color: white;
+}
+
+.card-preview-container {
+  align-items: center;
+  background-color: #2fc18c;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  justify-content: space-around;
+  margin: auto;
+  padding: 25px;
+  width: 80%;
 }
