@@ -8,6 +8,7 @@ class Form extends React.Component {
       cardImage, cardRare, cardTrunfo, isSaveButtonDisabled,
       onInputChange, onSaveButtonClick } = this.props;
     const rarity = ['normal', 'raro', 'muito raro'];
+
     return (
       <form>
         <h2> NOVA CARTA </h2>
@@ -83,7 +84,7 @@ class Form extends React.Component {
         />
         <button
           data-testid="save-button"
-          type="button"
+          type="submit"
           disabled={ isSaveButtonDisabled }
           onClick={ onSaveButtonClick }
         >
@@ -107,6 +108,11 @@ Form.propTypes = {
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
+  // cardData: PropTypes.arrayOf(PropTypes.object),
 };
+
+// Form.defaultProps = {
+//   cardData: [],
+// };
 
 export default Form;

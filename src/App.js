@@ -3,6 +3,19 @@ import Form from './components/Form';
 import Card from './components/Card';
 import './App.css';
 
+const ON_SAVE_RESET_FORM = {
+  cardName: '',
+  cardDescription: '',
+  cardAttr1: '0',
+  cardAttr2: '0',
+  cardAttr3: '0',
+  cardImage: '',
+  cardRare: 'normal',
+  cardTrunfo: false,
+  hasTrunfo: false,
+  isSaveButtonDisabled: true,
+};
+
 class App extends React.Component {
   constructor() {
     super();
@@ -17,7 +30,21 @@ class App extends React.Component {
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
+      cardData: [],
     };
+    // this.state = {
+    //   cardName: 'teste',
+    //   cardDescription: 'teste',
+    //   cardAttr1: '41',
+    //   cardAttr2: '41',
+    //   cardAttr3: '41',
+    //   cardImage: 'dada',
+    //   cardRare: 'normal',
+    //   cardTrunfo: false,
+    //   hasTrunfo: false,
+    //   isSaveButtonDisabled: false,
+    //   cardData: [],
+    // };
   }
 
   handleFormValidation = () => {
@@ -59,6 +86,35 @@ class App extends React.Component {
     }, () => this.handleFormValidation());
   }
 
+  handleButtonClick = (event) => {
+    event.preventDefault();
+
+    const { cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+    } = this.state;
+
+    const thisCardData = {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+    };
+
+    this.setState((prevState) => ({
+      cardData: [...prevState.cardData, thisCardData], ...ON_SAVE_RESET_FORM,
+    }));
+  }
+
   render() {
     const { cardName,
       cardDescription,
@@ -78,10 +134,16 @@ class App extends React.Component {
       cardRare,
       cardTrunfo };
 
+    const metodos = {
+      onInputChange: this.handleChange,
+      onSaveButtonClick: this.handleButtonClick,
+    };
+
     return (
       <main>
-        <Form onInputChange={ this.handleChange } { ...this.state } />
-        <button onClick={ this.handleFormValidation } type="button"> teste </button>
+        <Form { ...metodos } { ...this.state } />
+        {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
+        {/* <button onClick={ this.handleFormValidation } type="button"> teste </button> */}
         <section className="card-preview-section">
           <h2 className="preview-title">PREVIEW</h2>
           <Card { ...cardProps } />
