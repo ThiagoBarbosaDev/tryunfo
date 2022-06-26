@@ -6,8 +6,17 @@ class Form extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick } = this.props;
+      onInputChange, onSaveButtonClick, hasTrunfo } = this.props;
     const rarity = ['normal', 'raro', 'muito raro'];
+
+    const checkbox = (<Input
+      type="checkbox"
+      data-testid="trunfo-input"
+      label="SuperTrunfo?"
+      name="cardTrunfo"
+      checked={ cardTrunfo }
+      onChange={ onInputChange }
+    />);
 
     return (
       <form>
@@ -74,14 +83,7 @@ class Form extends React.Component {
             {rarity.map((tier) => <option key={ tier }>{tier}</option>)}
           </select>
         </label>
-        <Input
-          type="checkbox"
-          data-testid="trunfo-input"
-          label="SuperTrunfo?"
-          name="cardTrunfo"
-          checked={ cardTrunfo }
-          onChange={ onInputChange }
-        />
+        {hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p> : checkbox}
         <button
           data-testid="save-button"
           type="submit"
@@ -104,7 +106,7 @@ Form.propTypes = {
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
-  // hasTrunfo: PropTypes.bool.isRequired,
+  hasTrunfo: PropTypes.bool.isRequired,
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,

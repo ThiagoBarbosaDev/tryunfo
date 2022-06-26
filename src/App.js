@@ -12,7 +12,6 @@ const ON_SAVE_RESET_FORM = {
   cardImage: '',
   cardRare: 'normal',
   cardTrunfo: false,
-  hasTrunfo: false,
   isSaveButtonDisabled: true,
 };
 
@@ -86,6 +85,14 @@ class App extends React.Component {
     }, () => this.handleFormValidation());
   }
 
+  hasTrunfo = () => {
+    const { cardData } = this.state;
+    const hasTrunfo = cardData.some((card) => card.cardTrunfo);
+    this.setState({
+      hasTrunfo,
+    });
+  }
+
   handleButtonClick = (event) => {
     event.preventDefault();
 
@@ -112,7 +119,7 @@ class App extends React.Component {
 
     this.setState((prevState) => ({
       cardData: [...prevState.cardData, thisCardData], ...ON_SAVE_RESET_FORM,
-    }));
+    }), () => this.hasTrunfo());
   }
 
   render() {
@@ -143,7 +150,7 @@ class App extends React.Component {
       <main>
         <Form { ...metodos } { ...this.state } />
         {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
-        {/* <button onClick={ this.handleFormValidation } type="button"> teste </button> */}
+        {/* <button onClick={ this.isThereTrunfo } type="button"> teste </button> */}
         <section className="card-preview-section">
           <h2 className="preview-title">PREVIEW</h2>
           <Card { ...cardProps } />
