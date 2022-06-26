@@ -24,11 +24,12 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   checked: PropTypes.bool,
 };
 
 Input.defaultProps = {
+  value: '',
   checked: null,
 };
 
