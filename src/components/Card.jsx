@@ -8,7 +8,7 @@ class Card extends React.Component {
     return (
       <div className="card-container">
         <p data-testid="name-card">{ cardName }</p>
-        <img 
+        <img
           src={ cardImage }
           alt={ cardName }
           data-testid="image-card"
