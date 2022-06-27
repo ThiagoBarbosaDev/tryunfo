@@ -16,6 +16,36 @@ const ON_SAVE_RESET_FORM = {
   isSaveButtonDisabled: true,
 };
 
+// const mock1 = {
+//   cardName: 'Carta 1 - Bebedouro de Guarulhos',
+//   cardDescription: 'HACHIKUJI!!!!',
+//   cardAttr1: '41',
+//   cardAttr2: '41',
+//   cardAttr3: '41',
+//   cardImage: 'https://i.pinimg.com/474x/8b/14/bf/8b14bfaa3ced8597c41adb09683ff990.jpg',
+//   cardRare: 'normal',
+//   cardTrunfo: false,
+// };
+// const mock2 = {
+//   cardName: 'Carta 2 - Bebedouro de Bebedouro',
+//   cardDescription: 'Ka ka',
+//   cardAttr1: '50',
+//   cardAttr2: '50',
+//   cardAttr3: '30',
+//   cardImage: 'https://i.pinimg.com/736x/fd/c4/1d/fdc41d0df92c1b896fe1aba74d8905f2.jpg',
+//   cardRare: 'raro',
+//   cardTrunfo: false,
+// };
+// const mock3 = {
+//   cardName: 'Carta 3 - Fonte Natural',
+//   cardDescription: 'KA KA',
+//   cardAttr1: '90',
+//   cardAttr2: '90',
+//   cardAttr3: '30',
+//   cardImage: 'https://c4.wallpaperflare.com/wallpaper/995/404/978/anime-monogatari-series-kiss-shot-acerola-orion-heart-under-blade-kizumonogatari-wallpaper-preview.jpg',
+//   cardRare: 'normal',
+//   cardTrunfo: true,
+// };
 class App extends React.Component {
   constructor() {
     super();
@@ -31,7 +61,22 @@ class App extends React.Component {
       hasTrunfo: false,
       isSaveButtonDisabled: true,
       cardData: [],
+      filterName: '',
     };
+    // this.state = {
+    //   cardName: '',
+    //   cardDescription: '',
+    //   cardAttr1: '',
+    //   cardAttr2: '',
+    //   cardAttr3: '',
+    //   cardImage: '',
+    //   cardRare: 'normal',
+    //   cardTrunfo: false,
+    //   hasTrunfo: false,
+    //   isSaveButtonDisabled: true,
+    //   cardData: [mock1, mock2, mock3],
+    //   filterName: '',
+    // };
   }
 
   handleFormValidation = () => {
@@ -90,20 +135,31 @@ class App extends React.Component {
     }, () => updateHasTrunfo());
   }
 
+  handleNameFilter = () => {
+    const { cardData, filterName } = this.state;
+    const filteredData = cardData
+      .filter((card) => card.cardName
+        .toLowerCase()
+        .includes(filterName.toLowerCase()));
+    // return cardData;
+    return filteredData;
+  }
+
   renderSavedCards = () => {
-    const { cardData } = this.state;
-    const newCard = cardData.map((card) => (
-      <>
+    const { cardData, filterName } = this.state;
+    const cardDataToRender = filterName ? this.handleNameFilter() : cardData;
+    const newCard = cardDataToRender.map((card) => (
+      <div className="card-container2" key={ `container-${card.name}` }>
         <Card { ...card } key={ card.name } />
         <button
           key={ `button-${card.cardName}` }
           type="button"
           data-testid="delete-button"
-          onClick={ () => this.handleRemove(cardData.indexOf(card)) }
+          onClick={ () => this.handleRemove(cardDataToRender.indexOf(card)) }
         >
           Excluir
         </button>
-      </>));
+      </div>));
     return newCard;
   }
 
@@ -145,6 +201,7 @@ class App extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
+      filterName,
     } = this.state;
 
     const cardProps = { cardName,
@@ -166,14 +223,20 @@ class App extends React.Component {
         <main>
           <Form { ...metodos } { ...this.state } />
           {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
-          {/* <button onClick={ this.isThereTrunfo } type="button"> teste </button> */}
+          {/* <button onClick={ this.handleNameFilter() } type="button"> teste </button> */}
           <section className="card-preview-section">
             <h2 className="preview-title">PREVIEW</h2>
             <Card { ...cardProps } />
           </section>
         </main>
         <section className="deck-page">
-          <Deck renderCards={ this.renderSavedCards } />
+          <Deck
+            renderCards={ this.renderSavedCards }
+            onChange={ metodos.onInputChange }
+            cardRare={ cardRare }
+            filterName={ filterName }
+            onFilterName={ this.handleNameFilter }
+          />
         </section>
       </>
     );

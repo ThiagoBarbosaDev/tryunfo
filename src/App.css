@@ -260,5 +260,12 @@ input, textarea, select {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  margin-top: 50px;
   width: 100%;
+}
+
+.card-container2 {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }

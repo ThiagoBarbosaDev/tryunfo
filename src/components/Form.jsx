@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
+import Combobox from './Combobox';
 
 class Form extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, isSaveButtonDisabled,
       onInputChange, onSaveButtonClick, hasTrunfo } = this.props;
-    const rarity = ['normal', 'raro', 'muito raro'];
 
     const checkbox = (<Input
       type="checkbox"
@@ -71,7 +71,12 @@ class Form extends React.Component {
           value={ cardImage }
           onChange={ onInputChange }
         />
-        <label htmlFor="form-rarity">
+        <Combobox
+          cardRare={ cardRare }
+          onChange={ onInputChange }
+          label="Rarity:"
+        />
+        {/* <label htmlFor="form-rarity">
           Rarity:
           <select
             data-testid="rare-input"
@@ -82,7 +87,7 @@ class Form extends React.Component {
           >
             {rarity.map((tier) => <option key={ tier }>{tier}</option>)}
           </select>
-        </label>
+        </label> */}
         {hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p> : checkbox}
         <button
           data-testid="save-button"
