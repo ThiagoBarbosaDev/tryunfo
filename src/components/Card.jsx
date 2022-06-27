@@ -6,9 +6,14 @@ class Card extends React.Component {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo } = this.props;
     return (
-      <div className="card-preview-container">
+      <div className="card-container">
         <p data-testid="name-card">{ cardName }</p>
-        <img src={ cardImage } alt={ cardName } data-testid="image-card" />
+        <img 
+          src={ cardImage }
+          alt={ cardName }
+          data-testid="image-card"
+          className="card-container__image"
+        />
         <p data-testid="description-card">{cardDescription}</p>
         <section>
           <div data-testid="attr1-card">

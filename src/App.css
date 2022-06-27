@@ -112,6 +112,7 @@ h2 {
 }
 
 h3 {
+  color: white;
   font-size: 1.953rem;
 }
 
@@ -218,15 +219,46 @@ input, textarea, select {
   color: white;
 }
 
-.card-preview-container {
+.card-container {
   align-items: center;
   background-color: #2fc18c;
   border-radius: 25px;
+  box-shadow: 1px 10px 10px 10px black;
   display: flex;
   flex-direction: column;
-  height: 80%;
+  gap: 50px;
+  height: 600px;
   justify-content: space-around;
   margin: auto;
+  outline: 10px solid white;
   padding: 25px;
-  width: 80%;
+  width: 400px;
+}
+
+.card-container__image {
+  height: 400px;
+  width: 400px;
+}
+
+.deck-page {
+  display: flex;
+  flex-direction: row;
+}
+
+.filter-container {
+  background-color: var(--green-dark);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 700px;
+  padding: 2rem 12.5rem;
+  width: 30%;
+}
+
+.deck-container {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  width: 100%;
 }

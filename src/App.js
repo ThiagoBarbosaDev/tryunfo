@@ -31,19 +31,6 @@ class App extends React.Component {
       isSaveButtonDisabled: true,
       cardData: [],
     };
-    // this.state = {
-    //   cardName: 'Horny Leo',
-    //   cardDescription: '"Huehuehue eu sou Zeus..."',
-    //   cardAttr1: '42',
-    //   cardAttr2: '69',
-    //   cardAttr3: '42',
-    //   cardImage: 'https://i.imgur.com/kynSoXz.png',
-    //   cardRare: 'normal',
-    //   cardTrunfo: false,
-    //   hasTrunfo: false,
-    //   isSaveButtonDisabled: false,
-    //   cardData: [],
-    // };
   }
 
   handleFormValidation = () => {
@@ -93,9 +80,29 @@ class App extends React.Component {
     });
   }
 
+  handleRemove = (cardN) => {
+    const { cardData } = this.state;
+    const updateHasTrunfo = this.hasTrunfo;
+    cardData.splice(cardN, 1);
+    this.setState({
+      cardData,
+    }, () => updateHasTrunfo());
+  }
+
   renderSavedCards = () => {
     const { cardData } = this.state;
-    const newCard = cardData.map((card) => <Card key={ card.name } { ...card } />);
+    const newCard = cardData.map((card) => (
+      <>
+        <Card { ...card } key={ card.name } />
+        <button
+          key={ `button-${card.cardName}` }
+          type="button"
+          data-testid="delete-button"
+          onClick={ () => this.handleRemove(cardData.indexOf(card)) }
+        >
+          Excluir
+        </button>
+      </>));
     return newCard;
   }
 
@@ -164,8 +171,12 @@ class App extends React.Component {
             <Card { ...cardProps } />
           </section>
         </main>
-        <section>
-          {!!cardData.length && <div>{this.renderSavedCards()}</div>}
+        <section className="deck-page">
+          <section className="filter-container">
+            <h3>Filters</h3>
+          </section>
+          {!!cardData.length
+          && <div className="deck-container">{this.renderSavedCards()}</div>}
         </section>
       </>
     );
