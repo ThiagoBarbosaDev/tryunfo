@@ -32,12 +32,12 @@ class App extends React.Component {
       cardData: [],
     };
     // this.state = {
-    //   cardName: 'teste',
-    //   cardDescription: 'teste',
-    //   cardAttr1: '41',
-    //   cardAttr2: '41',
-    //   cardAttr3: '41',
-    //   cardImage: 'dada',
+    //   cardName: 'Horny Leo',
+    //   cardDescription: '"Huehuehue eu sou Zeus..."',
+    //   cardAttr1: '42',
+    //   cardAttr2: '69',
+    //   cardAttr3: '42',
+    //   cardImage: 'https://i.imgur.com/kynSoXz.png',
     //   cardRare: 'normal',
     //   cardTrunfo: false,
     //   hasTrunfo: false,
@@ -93,6 +93,12 @@ class App extends React.Component {
     });
   }
 
+  renderSavedCards = () => {
+    const { cardData } = this.state;
+    const newCard = cardData.map((card) => <Card key={ card.name } { ...card } />);
+    return newCard;
+  }
+
   handleButtonClick = (event) => {
     event.preventDefault();
 
@@ -130,7 +136,8 @@ class App extends React.Component {
       cardAttr3,
       cardImage,
       cardRare,
-      cardTrunfo } = this.state;
+      cardTrunfo,
+      cardData } = this.state;
 
     const cardProps = { cardName,
       cardDescription,
@@ -147,15 +154,20 @@ class App extends React.Component {
     };
 
     return (
-      <main>
-        <Form { ...metodos } { ...this.state } />
-        {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
-        {/* <button onClick={ this.isThereTrunfo } type="button"> teste </button> */}
-        <section className="card-preview-section">
-          <h2 className="preview-title">PREVIEW</h2>
-          <Card { ...cardProps } />
+      <>
+        <main>
+          <Form { ...metodos } { ...this.state } />
+          {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
+          {/* <button onClick={ this.isThereTrunfo } type="button"> teste </button> */}
+          <section className="card-preview-section">
+            <h2 className="preview-title">PREVIEW</h2>
+            <Card { ...cardProps } />
+          </section>
+        </main>
+        <section>
+          {!!cardData.length && <div>{this.renderSavedCards()}</div>}
         </section>
-      </main>
+      </>
     );
   }
 }
