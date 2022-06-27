@@ -2,6 +2,7 @@ import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
 import './App.css';
+import Deck from './components/Deck';
 
 const ON_SAVE_RESET_FORM = {
   cardName: '',
@@ -144,7 +145,7 @@ class App extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
-      cardData } = this.state;
+    } = this.state;
 
     const cardProps = { cardName,
       cardDescription,
@@ -172,11 +173,7 @@ class App extends React.Component {
           </section>
         </main>
         <section className="deck-page">
-          <section className="filter-container">
-            <h3>Filters</h3>
-          </section>
-          {!!cardData.length
-          && <div className="deck-container">{this.renderSavedCards()}</div>}
+          <Deck renderCards={ this.renderSavedCards } />
         </section>
       </>
     );
