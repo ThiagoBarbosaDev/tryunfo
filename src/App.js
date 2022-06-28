@@ -43,9 +43,10 @@ const ON_SAVE_RESET_FORM = {
 //   cardAttr2: '90',
 //   cardAttr3: '30',
 //   cardImage: 'https://c4.wallpaperflare.com/wallpaper/995/404/978/anime-monogatari-series-kiss-shot-acerola-orion-heart-under-blade-kizumonogatari-wallpaper-preview.jpg',
-//   cardRare: 'normal',
+//   cardRare: 'muito raro',
 //   cardTrunfo: true,
 // };
+
 class App extends React.Component {
   constructor() {
     super();
@@ -62,21 +63,8 @@ class App extends React.Component {
       isSaveButtonDisabled: true,
       cardData: [],
       filterName: '',
+      filterRare: 'todas',
     };
-    // this.state = {
-    //   cardName: '',
-    //   cardDescription: '',
-    //   cardAttr1: '',
-    //   cardAttr2: '',
-    //   cardAttr3: '',
-    //   cardImage: '',
-    //   cardRare: 'normal',
-    //   cardTrunfo: false,
-    //   hasTrunfo: false,
-    //   isSaveButtonDisabled: true,
-    //   cardData: [mock1, mock2, mock3],
-    //   filterName: '',
-    // };
   }
 
   handleFormValidation = () => {
@@ -132,27 +120,35 @@ class App extends React.Component {
     cardData.splice(cardN, 1);
     this.setState({
       cardData,
-    }, () => updateHasTrunfo());
+    }, () => updateHasTrunfo(), () => this.renderSavedCards());
   }
 
-  handleNameFilter = () => {
-    const { cardData, filterName } = this.state;
-    const filteredData = cardData
+  handleNameFilter = (data) => {
+    const { filterName } = this.state;
+    const filteredData = data
       .filter((card) => card.cardName
         .toLowerCase()
         .includes(filterName.toLowerCase()));
-    // return cardData;
+    return filteredData;
+  }
+
+  handleRarityFilter = (data) => {
+    const { filterRare } = this.state;
+    const filteredData = data
+      .filter((card) => card.cardRare === filterRare);
     return filteredData;
   }
 
   renderSavedCards = () => {
-    const { cardData, filterName } = this.state;
-    const cardDataToRender = filterName ? this.handleNameFilter() : cardData;
+    const { cardData, filterName, filterRare } = this.state;
+    let data = cardData;
+    if (filterName) { data = this.handleNameFilter(data); }
+    if (filterRare !== 'todas') { data = this.handleRarityFilter(data); }
+    const cardDataToRender = data;
     const newCard = cardDataToRender.map((card) => (
-      <div className="card-container2" key={ `container-${card.name}` }>
-        <Card { ...card } key={ card.name } />
+      <div className="card-container2" key={ card.cardName }>
+        <Card { ...card } />
         <button
-          key={ `button-${card.cardName}` }
           type="button"
           data-testid="delete-button"
           onClick={ () => this.handleRemove(cardDataToRender.indexOf(card)) }
@@ -202,6 +198,7 @@ class App extends React.Component {
       cardRare,
       cardTrunfo,
       filterName,
+      filterRare,
     } = this.state;
 
     const cardProps = { cardName,
@@ -223,7 +220,7 @@ class App extends React.Component {
         <main>
           <Form { ...metodos } { ...this.state } />
           {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
-          {/* <button onClick={ this.handleNameFilter() } type="button"> teste </button> */}
+          <button onClick={ this.handleRarityFilter } type="button"> teste </button>
           <section className="card-preview-section">
             <h2 className="preview-title">PREVIEW</h2>
             <Card { ...cardProps } />
@@ -236,6 +233,7 @@ class App extends React.Component {
             cardRare={ cardRare }
             filterName={ filterName }
             onFilterName={ this.handleNameFilter }
+            filterRare={ filterRare }
           />
         </section>
       </>

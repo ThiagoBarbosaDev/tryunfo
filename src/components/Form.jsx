@@ -72,9 +72,12 @@ class Form extends React.Component {
           onChange={ onInputChange }
         />
         <Combobox
+          dataTestId="rare-input"
+          name="cardRare"
           cardRare={ cardRare }
           onChange={ onInputChange }
           label="Rarity:"
+          selectData={ ['normal', 'raro', 'muito raro'] }
         />
         {/* <label htmlFor="form-rarity">
           Rarity:
