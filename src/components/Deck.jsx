@@ -5,7 +5,8 @@ import Combobox from './Combobox';
 
 class Deck extends React.Component {
   render() {
-    const { renderCards, onChange, filterName, filterRare } = this.props;
+    const { renderCards,
+      onChange, filterName, filterRare, filterTrunfo, hasTrunfo } = this.props;
     return (
       <>
         <section className="filter-container">
@@ -17,14 +18,25 @@ class Deck extends React.Component {
             label="Por nome: "
             value={ filterName }
             onChange={ onChange }
+            disabled={ filterTrunfo }
           />
           <Combobox
             cardRare={ filterRare }
             onChange={ onChange }
-            label="Rarity:"
+            label="Por raridade:"
             name="filterRare"
             selectData={ ['todas', 'normal', 'raro', 'muito raro'] }
-            dataTestId="rare-filter"
+            data-testid="rare-filter"
+            disabled={ filterTrunfo }
+          />
+          <Input
+            type="checkbox"
+            data-testid="trunfo-filter"
+            label="Por trunfo"
+            name="filterTrunfo"
+            onChange={ onChange }
+            checked={ filterTrunfo }
+            disabled={ !hasTrunfo }
           />
         </section>
         <div className="deck-container">{ renderCards() }</div>
@@ -38,6 +50,8 @@ Deck.propTypes = {
   onChange: PropTypes.func.isRequired,
   filterName: PropTypes.string.isRequired,
   filterRare: PropTypes.string.isRequired,
+  filterTrunfo: PropTypes.bool.isRequired,
+  hasTrunfo: PropTypes.bool.isRequired,
 };
 
 export default Deck;

@@ -16,37 +16,6 @@ const ON_SAVE_RESET_FORM = {
   isSaveButtonDisabled: true,
 };
 
-// const mock1 = {
-//   cardName: 'Carta 1 - Bebedouro de Guarulhos',
-//   cardDescription: 'HACHIKUJI!!!!',
-//   cardAttr1: '41',
-//   cardAttr2: '41',
-//   cardAttr3: '41',
-//   cardImage: 'https://i.pinimg.com/474x/8b/14/bf/8b14bfaa3ced8597c41adb09683ff990.jpg',
-//   cardRare: 'normal',
-//   cardTrunfo: false,
-// };
-// const mock2 = {
-//   cardName: 'Carta 2 - Bebedouro de Bebedouro',
-//   cardDescription: 'Ka ka',
-//   cardAttr1: '50',
-//   cardAttr2: '50',
-//   cardAttr3: '30',
-//   cardImage: 'https://i.pinimg.com/736x/fd/c4/1d/fdc41d0df92c1b896fe1aba74d8905f2.jpg',
-//   cardRare: 'raro',
-//   cardTrunfo: false,
-// };
-// const mock3 = {
-//   cardName: 'Carta 3 - Fonte Natural',
-//   cardDescription: 'KA KA',
-//   cardAttr1: '90',
-//   cardAttr2: '90',
-//   cardAttr3: '30',
-//   cardImage: 'https://c4.wallpaperflare.com/wallpaper/995/404/978/anime-monogatari-series-kiss-shot-acerola-orion-heart-under-blade-kizumonogatari-wallpaper-preview.jpg',
-//   cardRare: 'muito raro',
-//   cardTrunfo: true,
-// };
-
 class App extends React.Component {
   constructor() {
     super();
@@ -64,6 +33,7 @@ class App extends React.Component {
       cardData: [],
       filterName: '',
       filterRare: 'todas',
+      filterTrunfo: false,
     };
   }
 
@@ -120,7 +90,7 @@ class App extends React.Component {
     cardData.splice(cardN, 1);
     this.setState({
       cardData,
-    }, () => updateHasTrunfo(), () => this.renderSavedCards());
+    }, () => updateHasTrunfo());
   }
 
   handleNameFilter = (data) => {
@@ -139,11 +109,14 @@ class App extends React.Component {
     return filteredData;
   }
 
+  handleTrunfoFilter = (data) => data.find((card) => card.cardTrunfo);
+
   renderSavedCards = () => {
-    const { cardData, filterName, filterRare } = this.state;
+    const { cardData, filterName, filterRare, filterTrunfo } = this.state;
     let data = cardData;
     if (filterName) { data = this.handleNameFilter(data); }
     if (filterRare !== 'todas') { data = this.handleRarityFilter(data); }
+    if (filterTrunfo) { data = [this.handleTrunfoFilter(data)]; }
     const cardDataToRender = data;
     const newCard = cardDataToRender.map((card) => (
       <div className="card-container2" key={ card.cardName }>
@@ -151,7 +124,7 @@ class App extends React.Component {
         <button
           type="button"
           data-testid="delete-button"
-          onClick={ () => this.handleRemove(cardDataToRender.indexOf(card)) }
+          onClick={ () => this.handleRemove(cardData.indexOf(card)) }
         >
           Excluir
         </button>
@@ -199,6 +172,8 @@ class App extends React.Component {
       cardTrunfo,
       filterName,
       filterRare,
+      filterTrunfo,
+      hasTrunfo,
     } = this.state;
 
     const cardProps = { cardName,
@@ -220,7 +195,7 @@ class App extends React.Component {
         <main>
           <Form { ...metodos } { ...this.state } />
           {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
-          <button onClick={ this.handleRarityFilter } type="button"> teste </button>
+          <button onClick={ this.handleTrunfoFilter } type="button"> teste </button>
           <section className="card-preview-section">
             <h2 className="preview-title">PREVIEW</h2>
             <Card { ...cardProps } />
@@ -234,6 +209,8 @@ class App extends React.Component {
             filterName={ filterName }
             onFilterName={ this.handleNameFilter }
             filterRare={ filterRare }
+            filterTrunfo={ filterTrunfo }
+            hasTrunfo={ hasTrunfo }
           />
         </section>
       </>

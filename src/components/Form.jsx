@@ -72,25 +72,13 @@ class Form extends React.Component {
           onChange={ onInputChange }
         />
         <Combobox
-          dataTestId="rare-input"
+          data-testid="rare-input"
           name="cardRare"
           cardRare={ cardRare }
           onChange={ onInputChange }
           label="Rarity:"
           selectData={ ['normal', 'raro', 'muito raro'] }
         />
-        {/* <label htmlFor="form-rarity">
-          Rarity:
-          <select
-            data-testid="rare-input"
-            id="form-rarity"
-            name="cardRare"
-            value={ cardRare }
-            onChange={ onInputChange }
-          >
-            {rarity.map((tier) => <option key={ tier }>{tier}</option>)}
-          </select>
-        </label> */}
         {hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p> : checkbox}
         <button
           data-testid="save-button"
@@ -118,11 +106,6 @@ Form.propTypes = {
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
-  // cardData: PropTypes.arrayOf(PropTypes.object),
 };
-
-// Form.defaultProps = {
-//   cardData: [],
-// };
 
 export default Form;
