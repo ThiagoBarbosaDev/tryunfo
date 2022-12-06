@@ -112,15 +112,22 @@ class App extends React.Component {
   handleTrunfoFilter = (data) => data.find((card) => card.cardTrunfo);
 
   renderSavedCards = () => {
-    const { cardData, filterName, filterRare, filterTrunfo } = this.state;
+    const { cardData, filterName, filterRare, filterTrunfo, cardImage } = this.state;
     let data = cardData;
     if (filterName) { data = this.handleNameFilter(data); }
     if (filterRare !== 'todas') { data = this.handleRarityFilter(data); }
     if (filterTrunfo) { data = [this.handleTrunfoFilter(data)]; }
+    console.log(cardImage);
     const cardDataToRender = data;
     const newCard = cardDataToRender.map((card) => (
-      <div className="card-container2" key={ card.cardName }>
-        <Card { ...card } />
+      <div key={ card.cardName } className="card-button-container">
+        <div
+          className={ `card-outline-${card.cardRare.split(' ').join('')}` }
+        >
+          <div className="card-container2">
+            <Card { ...card } />
+          </div>
+        </div>
         <button
           type="button"
           data-testid="delete-button"
@@ -128,7 +135,9 @@ class App extends React.Component {
         >
           Excluir
         </button>
-      </div>));
+      </div>
+
+));
     return newCard;
   }
 
@@ -195,7 +204,7 @@ class App extends React.Component {
         <main>
           <Form { ...metodos } { ...this.state } />
           {/* <Form onInputChange={ this.handleChange } { ...this.state } /> */}
-          <button onClick={ this.handleTrunfoFilter } type="button"> teste </button>
+          {/* <button onClick={ this.test } type="button"> teste </button> */}
           <section className="card-preview-section">
             <h2 className="preview-title">PREVIEW</h2>
             <Card { ...cardProps } />
